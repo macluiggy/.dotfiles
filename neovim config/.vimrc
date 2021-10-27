@@ -12,6 +12,13 @@ set cursorline
 
 set laststatus=2
 set noshowmode
+set expandtab
+set shiftwidth=4
+
+set autoindent
+set cindent
+
+set splitbelow
 
 call plug#begin('~/.vim/plugged')
 
@@ -29,6 +36,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'chemzqm/vim-jsx-improve'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'ap/vim-css-color'
 
 call plug#end()
 
@@ -37,7 +48,7 @@ let g:gruvbox_contrast_dark = "hard"
 let NERDTreeQuitOnOpen=1
 let g:auto_save=1
 let g:auto_save_events = ["InsertLeave", "TextChanged"]
-let g:coc_global_extensions = ['coc-tsserver', 'coc-json']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-html']
 let g:jsx_improve_javascriptreact = 0
 let g:coc_filetype_map = {'js': 'typescriptreact'}
 
@@ -56,11 +67,24 @@ nmap <Leader>n :NERDTreeFind<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
 nmap <Leader>% :source %<CR>
+nmap <Leader>gs :!git status<CR>
+nmap <Leader>ga :!git add .<CR>
+nmap <Leader>gc :!git commit -m '
+nmap <Leader>gp :!git push<CR>
+nmap <Leader>v :!git
+nmap <Leader>gb :!git branch
+nmap <Leader>gbs :!git branch switch -c
+nmap <Leader>gsw :!git switch -<CR>
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gr <Plug>(coc-references)
 
 inoremap jj <ESC>
 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+autocmd FileType scss setl iskeyword+=@-@
 augroup ReactFiletypes
   autocmd!
   autocmd BufRead,BufNewFile *.jsx set filetype=javascriptreact
